@@ -49,10 +49,6 @@ export const parseDnsRecord = (record: string): ParsedDnsRecord => {
 };
 
 export const findDnsRecord = async (domain: string): Promise<ParsedDnsRecord> => {
-  if (domain.split('.').length < 2) {
-    return Promise.reject('No valid configuration found');
-  }
-
   try {
     const addresses = await promisifiedResolveTxt(`_openid.${domain}`);
     for (const value of addresses) {
@@ -62,12 +58,15 @@ export const findDnsRecord = async (domain: string): Promise<ParsedDnsRecord> =>
       }
     }
   } catch (error) {
-    if (error.code !== 'ENOTFOUND') {
-      console.error(error);
+    if (error.code !== 'ENOTFOUND' && error.code !== 'ENODATA') {
+      throw error;
     }
   }
 
   const splitDomain = domain.split('.');
+  if (splitDomain.length <= 2) {
+    return Promise.reject(`No valid configuration found for ${domain}`);
+  }
   splitDomain.shift();
   return findDnsRecord(splitDomain.join('.'));
 };

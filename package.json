@@ -1,42 +1,42 @@
 {
-   "name": "node-id4me",
-   "version": "1.0.0",
-   "description": "A library simplifying ID4me authentication",
-   "main": "lib/index.js",
-   "types": "src/index.d.ts",
-   "files": [
-      "lib/"
-   ],
-   "repository": "https://github.com/feliskio/node-id4me",
-   "bugs": {
-      "url": "https://github.com/feliskio/node-id4me/issues"
-   },
-   "homepage": "https://github.com/feliskio/node-id4me",
-   "author": "Felix Wotschofsky <hello@felisk.io>",
-   "license": "MIT",
-   "scripts": {
-      "build": "tsc",
-      "lint": "eslint src/**",
-      "test": "jest --passWithNoTests",
-      "prepublish": "npm build"
-   },
-   "husky": {
-      "hooks": {
-         "pre-commit": "npm test"
-      }
-   },
-   "devDependencies": {
-      "@types/jest": "^24.9.0",
-      "@types/node": "^13.1.6",
-      "@typescript-eslint/eslint-plugin": "^2.16.0",
-      "@typescript-eslint/parser": "^2.16.0",
-      "eslint": "^6.8.0",
-      "eslint-config-prettier": "^6.9.0",
-      "eslint-plugin-prettier": "^3.1.2",
-      "husky": "^4.0.10",
-      "jest": "^24.9.0",
-      "prettier": "^1.19.1",
-      "ts-jest": "^24.3.0",
-      "typescript": "^3.7.4"
-   }
+  "name": "node-id4me",
+  "version": "1.0.0",
+  "description": "A library simplifying ID4me authentication",
+  "main": "lib/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "lib/"
+  ],
+  "repository": "https://github.com/feliskio/node-id4me",
+  "bugs": {
+    "url": "https://github.com/feliskio/node-id4me/issues"
+  },
+  "homepage": "https://github.com/feliskio/node-id4me",
+  "author": "Felix Wotschofsky <hello@felisk.io>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src/**",
+    "test": "jest --passWithNoTests",
+    "prepublish": "npm build"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
+    }
+  },
+  "devDependencies": {
+    "@types/jest": "^24.9.0",
+    "@types/node": "^13.1.6",
+    "@typescript-eslint/eslint-plugin": "^2.16.0",
+    "@typescript-eslint/parser": "^2.16.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.0.10",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.3.0",
+    "typescript": "^3.7.4"
+  }
 }

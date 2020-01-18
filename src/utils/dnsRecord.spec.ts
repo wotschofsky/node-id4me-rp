@@ -1,4 +1,6 @@
-import { validateDnsRecord, parseDnsRecord } from './dnsRecord';
+import { validateDnsRecord, parseDnsRecord, findDnsRecord } from './dnsRecord';
+
+jest.mock('dns', () => jest.requireActual('../../__mocks__/dns'));
 
 it('should validate dns record', () => {
   const randomValue = validateDnsRecord('5&$Tn$4!;4#%^*984@;863');
@@ -14,7 +16,7 @@ it('should validate dns record', () => {
   expect(validKey).toBe(true);
 });
 
-it('parse dns record', () => {
+it('should parse dns record', () => {
   const result1 = parseDnsRecord('v=OID1;iss=id.test.denic.de;clp=identityagent.de');
   expect(result1).toStrictEqual({
     v: 'OID1',
@@ -30,4 +32,16 @@ it('parse dns record', () => {
     iss: 'https://id4me.mailbox.org/auth/realms/mbo/',
     cp: 'id4me.mailbox.org/auth/realms/mbo/'
   });
+});
+
+it('should try to find a valid dns record', () => {
+  findDnsRecord('subsub.sub.example.com')
+    .then(result => {
+      expect(result).toBe({
+        v: 'OID1',
+        iss: 'https://id.test.denic.de',
+        cp: 'identityagent.de'
+      });
+    })
+    .catch(error => error);
 });

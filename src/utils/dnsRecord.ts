@@ -1,11 +1,11 @@
 import dns from 'dns';
 import { promisify } from 'util';
 
-export type ParsedDnsRecord = {
+interface ParsedDnsRecord {
   v: string;
   iss: string;
   cp: string;
-};
+}
 
 const promisifiedResolveTxt = promisify(dns.resolveTxt);
 

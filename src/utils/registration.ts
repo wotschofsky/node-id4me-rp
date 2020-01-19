@@ -34,7 +34,10 @@ export const getConfiguration = async (iss: string): Promise<Record<string, any>
   return Promise.resolve(result.data);
 };
 
-export const registerApplication = async (iss: string, config: ApplicationRegistrationData): Promise<void> => {
+export const registerApplication = async (
+  iss: string,
+  config: ApplicationRegistrationData
+): Promise<Record<string, any>> => {
   if (config.application_type === 'web') {
     for (const uri of config.redirect_uris) {
       if (/localhost/.test(uri)) {
@@ -52,7 +55,6 @@ export const registerApplication = async (iss: string, config: ApplicationRegist
 
   const endpoint = (await getConfiguration(iss))['registration_endpoint'] as string;
 
-  axios.post(endpoint, config).then(res => {
-    console.log(res.data);
-  });
+  const response = await axios.post(endpoint, config);
+  return response.data;
 };

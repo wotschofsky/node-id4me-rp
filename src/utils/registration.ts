@@ -32,6 +32,8 @@ export const getConfiguration = async (iss: string): Promise<Record<string, any>
     throw new Error('Issuer does not match requested one');
   }
   return Promise.resolve(result.data);
+  // TODO create custom return type
+  // TODO implement caching
 };
 
 export const registerApplication = async (
@@ -57,4 +59,9 @@ export const registerApplication = async (
 
   const response = await axios.post(endpoint, config);
   return response.data;
+
+  // TODO create custom return type
+  // TODO implement caching
 };
+
+// TODO implement encryption and signing

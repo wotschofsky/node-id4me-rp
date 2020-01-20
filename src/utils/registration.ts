@@ -1,4 +1,5 @@
 import axios from 'axios';
+import cache from '../cache';
 
 interface ApplicationRegistrationData {
   redirect_uris: string[];
@@ -26,20 +27,42 @@ export const getConfigurationUrl = (iss: string): string => {
   return result;
 };
 
-export const getConfiguration = async (iss: string): Promise<Record<string, any>> => {
-  const result = await axios.get(getConfigurationUrl(iss));
-  if (result.data.issuer !== iss) {
+export const getConfiguration = async (iss: string, forceRefetch = false): Promise<Record<string, any>> => {
+  const cacheKey = `authorityConfig.${iss}`;
+  const existsInCache = cache.has(cacheKey) && !forceRefetch;
+
+  if (existsInCache) {
+    const config = cache.get(cacheKey) as Record<string, any>;
+    if (config) {
+      return config;
+    }
+  }
+
+  const response = await axios.get(getConfigurationUrl(iss));
+  if (response.data.issuer !== iss) {
     throw new Error('Issuer does not match requested one');
   }
-  return Promise.resolve(result.data);
+  cache.set(cacheKey, response.data);
+  return response.data;
+
   // TODO create custom return type
-  // TODO implement caching
 };
 
 export const registerApplication = async (
   iss: string,
-  config: ApplicationRegistrationData
+  config: ApplicationRegistrationData,
+  forceReset = false
 ): Promise<Record<string, any>> => {
+  const cacheKey = `application.${iss}`;
+  const existsInCache = cache.has(cacheKey) && !forceReset;
+
+  if (existsInCache) {
+    const config = cache.get(cacheKey) as Record<string, any>;
+    if (config) {
+      return config;
+    }
+  }
+
   if (config.application_type === 'web') {
     for (const uri of config.redirect_uris) {
       if (/localhost/.test(uri)) {
@@ -58,6 +81,7 @@ export const registerApplication = async (
   const endpoint = (await getConfiguration(iss))['registration_endpoint'] as string;
 
   const response = await axios.post(endpoint, config);
+  cache.set(cacheKey, response.data);
   return response.data;
 
   // TODO create custom return type

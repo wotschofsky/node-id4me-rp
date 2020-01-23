@@ -115,3 +115,14 @@ export interface AuthenticationUrlConfig {
   claims: ClaimsConfig;
   // TODO implement prompt
 }
+
+export interface DecodedIdToken {
+  'id4me.identifier': string;
+  amr: string[];
+  aud: string;
+  auth_time: number;
+  exp: number;
+  iat: number;
+  iss: string;
+  sub: string;
+}

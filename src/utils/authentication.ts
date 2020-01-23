@@ -1,30 +1,8 @@
 import qs from 'querystring';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 import { getConfiguration } from './registration';
-
-interface ClaimsConfig {
-  userinfo: {
-    [key: string]: {
-      essential?: boolean;
-      reason: string;
-    } | null;
-  };
-  id_token: {
-    auth_time: {
-      essential: boolean;
-    };
-  };
-}
-
-interface AuthenticationUrlConfig {
-  iss: string;
-  clientId: string;
-  redirectUri: string;
-  state?: string;
-  loginHint?: string;
-  claims: ClaimsConfig;
-  // TODO implement prompt
-}
+import { AuthenticationUrlConfig, TokenResponse, DecodedIdToken } from '../types';
 
 export const getAuthenticationUrl = async (config: AuthenticationUrlConfig): Promise<string> => {
   const providerConfig = await getConfiguration(config.iss);
@@ -37,7 +15,37 @@ export const getAuthenticationUrl = async (config: AuthenticationUrlConfig): Pro
     state: config.state,
     login_hint: config.loginHint,
     claims: JSON.stringify(config.claims)
-  })
+  });
 
-  return providerConfig.authorization_endpoint + params;
+  return `${providerConfig.authorization_endpoint}?${params}`;
+};
+
+export const getTokens = async (
+  iss: string,
+  clientId: string,
+  clientSecret: string,
+  code: string,
+  redirectUri: string
+): Promise<TokenResponse> => {
+  const providerConfig = await getConfiguration(iss);
+
+  const body = qs.stringify({
+    grant_type: 'authorization_code',
+    code: code,
+    redirect_uri: redirectUri
+  });
+  const response = await axios.post(providerConfig.token_endpoint, body, {
+    auth: {
+      username: clientId,
+      password: clientSecret
+    }
+  });
+  return response.data;
+};
+
+export const decodeIdToken = (token: string): DecodedIdToken => {
+  const content = jwt.decode(token, {
+    json: true
+  }) as DecodedIdToken;
+  return content;
 };

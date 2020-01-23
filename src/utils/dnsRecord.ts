@@ -1,11 +1,6 @@
 import dns from 'dns';
 import { promisify } from 'util';
-
-interface ParsedDnsRecord {
-  v: string;
-  iss: string;
-  cp: string;
-}
+import { ParsedDnsRecord } from '../types';
 
 const promisifiedResolveTxt = promisify(dns.resolveTxt);
 

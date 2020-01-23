@@ -1,23 +1,6 @@
 import axios from 'axios';
 import cache from '../cache';
-
-interface ApplicationRegistrationData {
-  redirect_uris: string[];
-  application_type?: 'native' | 'web';
-  contacts?: string[];
-  client_name?: string;
-  logo_uri?: string;
-  client_uri?: string;
-  policy_uri?: string;
-  tos_uri?: string;
-  jwks_uri?: string;
-  jwks?: {
-    [key: string]: string;
-  };
-  default_max_age?: number;
-  require_auth_time?: boolean;
-  initiate_login_uri?: boolean;
-}
+import { AuthorityConfiguration, ApplicationRegistrationData, ApplicationResponse } from '../types';
 
 export const getConfigurationUrl = (iss: string): string => {
   if (!iss) return iss;
@@ -27,12 +10,12 @@ export const getConfigurationUrl = (iss: string): string => {
   return result;
 };
 
-export const getConfiguration = async (iss: string, forceRefetch = false): Promise<Record<string, any>> => {
+export const getConfiguration = async (iss: string, forceRefetch = false): Promise<AuthorityConfiguration> => {
   const cacheKey = `authorityConfig.${iss}`;
   const existsInCache = cache.has(cacheKey) && !forceRefetch;
 
   if (existsInCache) {
-    const config = cache.get(cacheKey) as Record<string, any>;
+    const config = cache.get(cacheKey) as AuthorityConfiguration;
     if (config) {
       return config;
     }
@@ -52,12 +35,12 @@ export const registerApplication = async (
   iss: string,
   config: ApplicationRegistrationData,
   forceReset = false
-): Promise<Record<string, any>> => {
+): Promise<ApplicationResponse> => {
   const cacheKey = `application.${iss}`;
   const existsInCache = cache.has(cacheKey) && !forceReset;
 
   if (existsInCache) {
-    const config = cache.get(cacheKey) as Record<string, any>;
+    const config = cache.get(cacheKey) as ApplicationResponse;
     if (config) {
       return config;
     }

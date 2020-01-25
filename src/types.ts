@@ -126,3 +126,19 @@ export interface DecodedIdToken {
   iss: string;
   sub: string;
 }
+
+export interface ClaimsOverview {
+  _claim_sources: {
+    [id: string]: {
+      access_token: string;
+      endpoint: string;
+    };
+  };
+  sub: string;
+  iss: string;
+  _claim_names: {
+    [claim: string]: string;
+  };
+  iat: number;
+  aud: number;
+}

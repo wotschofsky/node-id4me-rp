@@ -34,13 +34,17 @@ export const getTokens = async (
     code: code,
     redirect_uri: redirectUri
   });
-  const response = await axios.post(providerConfig.token_endpoint, body, {
-    auth: {
-      username: clientId,
-      password: clientSecret
-    }
-  });
-  return response.data;
+  try {
+    const response = await axios.post(providerConfig.token_endpoint, body, {
+      auth: {
+        username: clientId,
+        password: clientSecret
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed getting tokens');
+  }
 };
 
 export const decodeIdToken = (token: string): DecodedIdToken => {

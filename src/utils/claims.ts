@@ -6,15 +6,19 @@ import { ClaimsOverview } from '../types';
 export const getClaims = async (iss: string, token: string): Promise<ClaimsOverview> => {
   const config = await getConfiguration(iss);
 
-  const response = await axios.get(config.userinfo_endpoint, {
-    headers: {
-      Accept: 'application/jwt',
-      Authorization: `Bearer ${token}`,
-      'Cache-Control': 'no-cache'
-    }
-  });
+  try {
+    const response = await axios.get(config.userinfo_endpoint, {
+      headers: {
+        Accept: 'application/jwt',
+        Authorization: `Bearer ${token}`,
+        'Cache-Control': 'no-cache'
+      }
+    });
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed getting available claims');
+  }
 };
 
 export const getClaim = async (claims: ClaimsOverview, name: string): Promise<string | number | null> => {
@@ -34,7 +38,6 @@ export const getClaim = async (claims: ClaimsOverview, name: string): Promise<st
 
     return content[name];
   } catch (err) {
-    console.log(err);
     return null;
   }
 };

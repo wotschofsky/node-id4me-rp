@@ -21,14 +21,16 @@ export const getConfiguration = async (iss: string, forceRefetch = false): Promi
     }
   }
 
-  const response = await axios.get(getConfigurationUrl(iss));
-  if (response.data.issuer !== iss) {
-    throw new Error('Issuer does not match requested one');
+  try {
+    const response = await axios.get(getConfigurationUrl(iss));
+    if (response.data.issuer !== iss) {
+      throw new Error('Issuer does not match requested one');
+    }
+    cache.set(cacheKey, response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Couldn't fetch authority config`);
   }
-  cache.set(cacheKey, response.data);
-  return response.data;
-
-  // TODO create custom return type
 };
 
 export const registerApplication = async (
@@ -63,12 +65,13 @@ export const registerApplication = async (
 
   const endpoint = (await getConfiguration(iss))['registration_endpoint'] as string;
 
-  const response = await axios.post(endpoint, config);
-  cache.set(cacheKey, response.data);
-  return response.data;
-
-  // TODO create custom return type
-  // TODO implement caching
+  try {
+    const response = await axios.post(endpoint, config);
+    cache.set(cacheKey, response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed registering application');
+  }
 };
 
 // TODO implement encryption and signing

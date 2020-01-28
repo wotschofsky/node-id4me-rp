@@ -15,7 +15,7 @@
   "author": "Felix Wotschofsky <hello@felisk.io>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf lib/ && tsc",
     "lint": "eslint src/**",
     "test": "jest --passWithNoTests",
     "prepublish": "npm build"

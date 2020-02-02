@@ -113,7 +113,7 @@ export interface AuthenticationUrlConfig {
   state?: string;
   loginHint?: string;
   claims: ClaimsConfig;
-  // TODO implement prompt
+  prompt?: 'none' | 'login' | 'consent' | 'select_account';
 }
 
 export interface DecodedIdToken {

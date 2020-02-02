@@ -14,7 +14,8 @@ export const getAuthenticationUrl = async (config: AuthenticationUrlConfig): Pro
     redirect_uri: config.redirectUri,
     state: config.state,
     login_hint: config.loginHint,
-    claims: JSON.stringify(config.claims)
+    claims: JSON.stringify(config.claims),
+    prompt: config.prompt
   });
 
   return `${providerConfig.authorization_endpoint}?${params}`;

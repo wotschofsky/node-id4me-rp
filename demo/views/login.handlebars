@@ -1,0 +1,15 @@
+<h1>Login</h1>
+<div class="col-6 offset-3">
+  {{#if error}}
+    <div class="alert alert-danger" role="alert">
+      {{ error }}
+    </div>
+  {{/if}}
+  <div class="card">
+    <form class="card-body" method="POST" action="/auth">
+      <label for="inputIdentifier" class="sr-only">Identifier</label>
+      <input name="identifier" id="inputIdentifier" class="form-control" placeholder="Identifier" required autofocus>
+      <button class="btn btn-block btn-primary" style="margin-top: 2rem;" type="submit">Login with ID4me</button>
+    </form>
+  </div>
+</div>

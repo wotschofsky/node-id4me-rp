@@ -2,6 +2,13 @@ import axios from './axios';
 import cache from '../cache';
 import { AuthorityConfiguration, ApplicationRegistrationData, ApplicationResponse } from '../types';
 
+const removeTrailingSlash = (value: string): string => {
+  if (value.endsWith('/')) {
+    return value.slice(0, -1);
+  }
+  return value;
+};
+
 export const getConfigurationUrl = (iss: string): string => {
   if (!iss) return iss;
 
@@ -23,7 +30,7 @@ export const getConfiguration = async (iss: string, forceRefetch = false): Promi
 
   try {
     const response = await axios.get(getConfigurationUrl(iss));
-    if (response.data.issuer !== iss) {
+    if (removeTrailingSlash(response.data.issuer) !== removeTrailingSlash(iss)) {
       throw new Error('Issuer does not match requested one');
     }
     cache.set(cacheKey, response.data);

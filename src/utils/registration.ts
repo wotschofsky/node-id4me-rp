@@ -29,6 +29,7 @@ export const getConfiguration = async (iss: string, forceRefetch = false): Promi
     cache.set(cacheKey, response.data);
     return response.data;
   } catch (error) {
+    console.log(error);
     throw new Error(`Couldn't fetch authority config`);
   }
 };
@@ -70,6 +71,7 @@ export const registerApplication = async (
     cache.set(cacheKey, response.data);
     return response.data;
   } catch (error) {
+    console.log(error);
     throw new Error('Failed registering application');
   }
 };

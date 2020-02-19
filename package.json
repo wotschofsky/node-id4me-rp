@@ -1,5 +1,5 @@
 {
-  "name": "node-id4me",
+  "name": "id4me-rp",
   "version": "0.0.1-alpha",
   "description": "A library simplifying ID4me authentication",
   "main": "lib/index.js",

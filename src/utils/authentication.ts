@@ -1,5 +1,5 @@
 import qs from 'querystring';
-import axios from 'axios';
+import axios from './axios';
 import jwt from 'jsonwebtoken';
 import { getConfiguration } from './registration';
 import { AuthenticationUrlConfig, TokenResponse, DecodedIdToken } from '../types';

@@ -1,9 +1,9 @@
 {
   "name": "node-id4me",
-  "version": "1.0.0",
+  "version": "0.0.1-alpha",
   "description": "A library simplifying ID4me authentication",
   "main": "lib/index.js",
-  "types": "src/index.d.ts",
+  "types": "lib/index.d.ts",
   "files": [
     "lib/"
   ],
@@ -45,6 +45,7 @@
     "axios": "^0.19.1",
     "axios-retry": "^3.1.2",
     "jsonwebtoken": "^8.5.1",
-    "node-cache": "^5.1.0"
+    "node-cache": "^5.1.0",
+    "ssl-root-cas": "^1.3.1"
   }
 }

@@ -5,19 +5,11 @@ import express from 'express';
 import handlebars from 'express-handlebars';
 import session from 'express-session';
 import bodyParser from 'body-parser';
-import lowdb from 'lowdb';
-import FileSync from 'lowdb/adapters/FileSync';
 import dotenv from 'dotenv';
 import * as id4me from '../src/index';
 
 // Load .env file
 dotenv.config();
-
-// Initialize database
-const db = lowdb(new FileSync(path.join(__dirname, 'database.json')));
-db.defaults({
-  users: []
-});
 
 const app = express();
 const port = process.env.PORT || 3030;

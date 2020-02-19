@@ -63,7 +63,9 @@ export interface ApplicationRegistrationData {
   tos_uri?: string;
   jwks_uri?: string;
   jwks?: {
-    [key: string]: string;
+    keys: {
+      [key: string]: string;
+    }[];
   };
   default_max_age?: number;
   require_auth_time?: boolean;

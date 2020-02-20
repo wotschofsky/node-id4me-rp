@@ -70,7 +70,7 @@ app.post('/auth', async (req, res) => {
           name: null,
           email: {
             essential: true,
-            reason: 'Required for to contact you'
+            reason: 'Required to contact you'
           }
         },
         id_token: {
@@ -103,7 +103,7 @@ app.get('/callback', async (req, res) => {
       app.client_id,
       app.client_secret,
       req.query.code,
-      'https://lvh.me:3030/callback'
+      `${process.env.DOMAIN}/callback`
     );
 
     const claimsClient = new id4me.ClaimsClient(req.session!.iss, tokens.access_token);

@@ -1,8 +1,9 @@
-![npm](https://img.shields.io/npm/v/id4me-rp?style=flat-square)
+[![npm](https://img.shields.io/npm/v/id4me-rp?style=flat-square)](https://www.npmjs.com/package/id4me-rp)
 
 # node-id4me-rp
 
-An Node.js ID4me Relying Party library implemented according to the [official guide](https://gitlab.com/ID4me/documentation/blob/master/id4ME%20Relying%20Party%20Implementation%20Guide.adoc)
+An Node.js ID4me Relying Party library implemented according to the [official guide](https://gitlab.com/ID4me/documentation/blob/master/id4ME%20Relying%20Party%20Implementation%20Guide.adoc)\
+[Demo Application](https://id4me-demo.felisk.io)
 
 ## Installation
 

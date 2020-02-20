@@ -133,7 +133,7 @@ const listeningCallback = (): void => {
   console.log(`Server listening on port ${port}`);
 };
 
-if (process.env.USE_HTTPS) {
+if (process.env.USE_HTTPS === 'true') {
   https
     .createServer(
       {

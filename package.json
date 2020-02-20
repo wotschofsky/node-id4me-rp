@@ -7,11 +7,11 @@
   "files": [
     "lib/"
   ],
-  "repository": "https://github.com/feliskio/node-id4me",
+  "repository": "https://github.com/feliskio/node-id4me-rp",
   "bugs": {
-    "url": "https://github.com/feliskio/node-id4me/issues"
+    "url": "https://github.com/feliskio/node-id4me-rp/issues"
   },
-  "homepage": "https://github.com/feliskio/node-id4me",
+  "homepage": "https://github.com/feliskio/node-id4me-rp",
   "author": "Felix Wotschofsky <hello@felisk.io>",
   "license": "MIT",
   "scripts": {

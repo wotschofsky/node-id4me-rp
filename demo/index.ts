@@ -79,6 +79,7 @@ app.post('/auth', async (req, res) => {
           }
         }
       },
+      loginHint: req.body.identifier,
       clientId: app.client_id,
       iss: record.iss,
       redirectUri: `${process.env.DOMAIN}/callback`

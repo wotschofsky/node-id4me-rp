@@ -144,3 +144,7 @@ export interface ClaimsOverview {
   iat: number;
   aud: number;
 }
+
+export type ApplicationSaveFunction = (identifier: string, data: ApplicationResponse) => Promise<void>;
+export type ApplicationGetFunction = (identifer: string) => Promise<ApplicationResponse>;
+export type ApplicationDeleteFunction = (identifier: string) => Promise<boolean>;

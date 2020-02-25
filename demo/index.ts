@@ -6,13 +6,37 @@ import handlebars from 'express-handlebars';
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import lowdb from 'lowdb';
+import FileSync from 'lowdb/adapters/FileSync';
 import * as id4me from '../src/index';
 
 // Load .env file
 dotenv.config();
 
+// Setup lowdb
+const REGISTERED_APPLICATIONS = 'applicationCredentials';
+
+const adapter = new FileSync('database.json');
+const db = lowdb(adapter);
+db.defaults({
+  [REGISTERED_APPLICATIONS]: {}
+}).write();
+
 const app = express();
 const port = process.env.PORT || 3030;
+
+const appRegistrationAdapter = new id4me.ApplicationStorageAdapter(
+  async (identifier, data) => {
+    db.set(`${REGISTERED_APPLICATIONS}.${identifier}`, data).write();
+  },
+  async identifier => {
+    return db.get(`${REGISTERED_APPLICATIONS}.${identifier}`).value();
+  },
+  async identifier => {
+    db.unset(`${REGISTERED_APPLICATIONS}.${identifier}`).write();
+    return true;
+  }
+);
 
 // Setup middleware
 app.use(
@@ -56,10 +80,14 @@ app.post('/auth', async (req, res) => {
   try {
     const record = await id4me.findDnsRecord(req.body.identifier);
 
-    const app = await id4me.registerApplication(record.iss, {
-      client_name: 'ID4me Node.js Demo',
-      redirect_uris: [`${process.env.DOMAIN}/callback`]
-    });
+    const app = await id4me.registerApplication(
+      record.iss,
+      {
+        client_name: 'ID4me Node.js Demo',
+        redirect_uris: [`${process.env.DOMAIN}/callback`]
+      },
+      appRegistrationAdapter
+    );
 
     const authUrl = await id4me.getAuthenticationUrl({
       claims: {
@@ -95,10 +123,14 @@ app.post('/auth', async (req, res) => {
 
 app.get('/callback', async (req, res) => {
   try {
-    const app = await id4me.registerApplication(req.session!.iss, {
-      client_name: 'ID4me Node.js Demo',
-      redirect_uris: [`${process.env.DOMAIN}/callback`]
-    });
+    const app = await id4me.registerApplication(
+      req.session!.iss,
+      {
+        client_name: 'ID4me Node.js Demo',
+        redirect_uris: [`${process.env.DOMAIN}/callback`]
+      },
+      appRegistrationAdapter
+    );
     const tokens = await id4me.getTokens(
       req.session!.iss,
       app.client_id,

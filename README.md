@@ -25,7 +25,23 @@ or\
 
 * getConfigurationUrl(iss: string): string
 * `async` getConfiguration(iss: string, forceRefetch = false): [AuthorityConfiguration](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L16)
-* `async` registerApplication(iss: string, config: [ApplicationRegistrationData](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L55), forceReset = false): [ApplicationResponse](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L75)
+* `async` registerApplication(iss: string, config: [ApplicationRegistrationData](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L55), adapter: [ApplicationStorageAdapter](/src/ApplicationStorageAdapter.ts), forceReset = false): [ApplicationResponse](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L75)
+
+ApplicationStorageAdapter: Used to replace the default method of storing the credentials for applications registered at different Identity Authorities. All provided functions are expected to return a promise.
+```javascript
+  const adapter = new id4me.ApplicationStorageAdapter(
+    async (identifier, data) => {
+      // Save credentials
+    },
+    async identifier => {
+      // Get and return credentials
+    },
+    async identifier => {
+      // Delete credentials
+      // Return boolean indicating success
+    }
+  );
+```
 
 #### Authentication
 
@@ -59,5 +75,4 @@ While the library and the example app are written in TypeScript you can also use
 * Support for emails as user identifier
 * Support for encryption (Looking for help)
 * Fix HTTPS requests failing due to bad certificates
-* Ability to save credentials for registered applications
 * Create more automated tests

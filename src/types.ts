@@ -143,6 +143,7 @@ export interface ClaimsOverview {
   };
   iat: number;
   aud: number;
+  [claim: string]: any;
 }
 
 export type ApplicationSaveFunction = (identifier: string, data: ApplicationResponse) => Promise<void>;

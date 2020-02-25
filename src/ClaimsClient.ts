@@ -12,7 +12,7 @@ export class ClaimsClient {
   }
 
   public async loadClaims(): Promise<void> {
-    const claims = await getClaims(this.iss, this.token)
+    const claims = await getClaims(this.iss, this.token);
     this.claims = claims;
   }
 
@@ -21,6 +21,9 @@ export class ClaimsClient {
       throw new Error(
         'Claims need be loaded first using ClaimsClient.loadClaims() before calling ClaimsClient.getClaim()'
       );
+    }
+    if (name in this.claims) {
+      return this.claims[name];
     }
     return getDistributedClaim(this.claims, name);
   }

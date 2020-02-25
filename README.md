@@ -52,7 +52,7 @@ ApplicationStorageAdapter: Used to replace the default method of storing the cre
 #### Claims
 
 * `async` getClaims(iss: string, token: string): [ClaimsOverview](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L132)
-* `async` getClaim(claims: [ClaimsOverview](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L132), name: string): string | number | null
+* `async` getDistributedClaim(claims: [ClaimsOverview](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L132), name: string): string | number | null
 
 ClaimsClient: Used to cut down on duplicate code when requesting multiple claims
 ```javascript

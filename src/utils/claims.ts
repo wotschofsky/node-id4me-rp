@@ -22,7 +22,7 @@ export const getClaims = async (iss: string, token: string): Promise<ClaimsOverv
   }
 };
 
-export const getClaim = async (claims: ClaimsOverview, name: string): Promise<string | number | null> => {
+export const getDistributedClaim = async (claims: ClaimsOverview, name: string): Promise<string | number | null> => {
   axiosRetry(axios, {
     retries: 5
   });

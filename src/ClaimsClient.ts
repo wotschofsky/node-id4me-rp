@@ -1,4 +1,4 @@
-import { getClaims, getClaim } from './utils/claims';
+import { getClaims, getDistributedClaim } from './utils/claims';
 import { ClaimsOverview } from './types';
 
 export class ClaimsClient {
@@ -22,6 +22,6 @@ export class ClaimsClient {
         'Claims need be loaded first using ClaimsClient.loadClaims() before calling ClaimsClient.getClaim()'
       );
     }
-    return getClaim(this.claims, name);
+    return getDistributedClaim(this.claims, name);
   }
 }

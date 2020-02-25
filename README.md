@@ -54,15 +54,11 @@ ApplicationStorageAdapter: Used to replace the default method of storing the cre
 * `async` getClaims(iss: string, token: string): [ClaimsOverview](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L132)
 * `async` getClaim(claims: [ClaimsOverview](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L132), name: string): string | number | null
 
-Claims Client: Used to cut down on duplicate code when requesting multiple claims
+ClaimsClient: Used to cut down on duplicate code when requesting multiple claims
 ```javascript
-  const claimsClient = new id4me.ClaimsClient(req.session!.iss, tokens.access_token);
+  const claimsClient = new id4me.ClaimsClient(identityAuthority, access_token);
   await claimsClient.loadClaims();
-  req.session!.userData = {
-    email: await claimsClient.getClaim('email'),
-    givenName: await claimsClient.getClaim('given_name'),
-    name: await claimsClient.getClaim('name')
-  };
+  const email = await claimsClient.getClaim('email');
 ```
 
 All methods can be required/imported from the package directly.\

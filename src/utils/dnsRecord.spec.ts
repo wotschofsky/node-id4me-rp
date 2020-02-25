@@ -1,4 +1,4 @@
-import { validateDnsRecord, parseDnsRecord, findDnsRecord } from './dnsRecord';
+import { validateDnsRecord, parseDnsRecord, findDnsRecord, filterAtSign } from './dnsRecord';
 
 jest.mock('dns', () => jest.requireActual('../../__mocks__/dns'));
 
@@ -32,6 +32,21 @@ it('should parse dns record', () => {
     iss: 'https://id4me.mailbox.org/auth/realms/mbo/',
     cp: 'id4me.mailbox.org/auth/realms/mbo/'
   });
+});
+
+it('should filter email addresses and return the domain', () => {
+  const validDomain = filterAtSign('example.com');
+  expect(validDomain).toBe('example.com');
+
+  const validSubdomain = filterAtSign('test.example.com');
+  expect(validSubdomain).toBe('test.example.com');
+
+  const validEmail = filterAtSign('mail@example.com');
+  expect(validEmail).toBe('example.com');
+
+  expect(() => {
+    filterAtSign('mail@e@xample.com');
+  }).toThrow();
 });
 
 it('should try to find a valid dns record', () => {

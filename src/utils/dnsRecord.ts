@@ -43,7 +43,23 @@ export const parseDnsRecord = (record: string): ParsedDnsRecord => {
   };
 };
 
-export const findDnsRecord = async (domain: string): Promise<ParsedDnsRecord> => {
+export const filterAtSign = (input: string): string => {
+  const atSignsFound = (input.match(/@/g) || []).length;
+
+  if (atSignsFound > 1) {
+    throw new Error('Identifier may not have more than one at sign');
+  }
+
+  if (atSignsFound == 1) {
+    return input.split('@')[1];
+  } else {
+    return input;
+  }
+};
+
+export const findDnsRecord = async (identifier: string): Promise<ParsedDnsRecord> => {
+  const domain = filterAtSign(identifier);
+
   try {
     const addresses = await promisifiedResolveTxt(`_openid.${domain}`);
     for (const value of addresses) {

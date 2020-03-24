@@ -1,4 +1,7 @@
-*.ts    eol=lf
+.git*   eol=lf
 *.js    eol=lf
 *.json  eol=lf
+*.lock  eol=lf
 *.md    eol=lf
+*.ts    eol=lf
+*.yml   eol=lf

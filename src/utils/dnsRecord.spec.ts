@@ -20,8 +20,7 @@ it('should parse dns record', () => {
   const result1 = parseDnsRecord('v=OID1;iss=id.test.denic.de;clp=identityagent.de');
   expect(result1).toStrictEqual({
     v: 'OID1',
-    iss: 'https://id.test.denic.de',
-    cp: 'identityagent.de'
+    iss: 'https://id.test.denic.de'
   });
 
   const result2 = parseDnsRecord(
@@ -29,8 +28,7 @@ it('should parse dns record', () => {
   );
   expect(result2).toStrictEqual({
     v: 'OID1',
-    iss: 'https://id4me.mailbox.org/auth/realms/mbo/',
-    cp: 'id4me.mailbox.org/auth/realms/mbo/'
+    iss: 'https://id4me.mailbox.org/auth/realms/mbo/'
   });
 });
 

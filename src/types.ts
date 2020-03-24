@@ -1,7 +1,6 @@
 export interface ParsedDnsRecord {
   v: string;
   iss: string;
-  cp: string;
 }
 
 export interface TokenResponse {

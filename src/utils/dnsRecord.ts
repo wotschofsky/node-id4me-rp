@@ -13,19 +13,15 @@ export const validateDnsRecord = (record: string): boolean => {
 
   const includesVersion = records.includes('v=OID1');
   const includesAuthority = records.findIndex(record => record.startsWith('iss=')) !== -1;
-  const includesAgent = records.findIndex(record => record.startsWith('clp=')) !== -1;
 
-  if (!(includesVersion && includesAuthority && includesAgent)) {
+  if (!(includesVersion && includesAuthority)) {
     return false;
   }
 
   const authority = records.find(record => record.startsWith('iss=')) as string;
   const authorityValid = typeof authority === 'string' && /(([a-zA-Z0-9]+)[.])+([a-zA-Z])+/.test(authority);
 
-  const agent = records.find(record => record.startsWith('clp=')) as string;
-  const agentValid = typeof agent === 'string' && /(([a-zA-Z0-9]+)[.])+([a-zA-Z])+/.test(authority);
-
-  return authorityValid && agentValid;
+  return authorityValid;
 };
 
 export const parseDnsRecord = (record: string): ParsedDnsRecord => {
@@ -38,8 +34,7 @@ export const parseDnsRecord = (record: string): ParsedDnsRecord => {
 
   return {
     v: values.v,
-    iss: `https://${values.iss}`,
-    cp: values.clp
+    iss: `https://${values.iss}`
   };
 };
 

@@ -1,5 +1,6 @@
 import dns from 'dns';
 import { promisify } from 'util';
+import punycode from 'punycode';
 import { ParsedDnsRecord } from '../types';
 
 const promisifiedResolveTxt = promisify(dns.resolveTxt);
@@ -53,7 +54,7 @@ export const filterAtSign = (input: string): string => {
 };
 
 export const findDnsRecord = async (identifier: string): Promise<ParsedDnsRecord> => {
-  const domain = filterAtSign(identifier);
+  const domain = punycode.toASCII(filterAtSign(identifier));
 
   try {
     const addresses = await promisifiedResolveTxt(`_openid.${domain}`);

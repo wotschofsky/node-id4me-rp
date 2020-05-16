@@ -5,8 +5,10 @@ import { getConfiguration } from './registration';
 import { AuthenticationUrlConfig, TokenResponse, DecodedIdToken } from '../types';
 
 export const getAuthenticationUrl = async (config: AuthenticationUrlConfig): Promise<string> => {
-  const providerConfig = await getConfiguration(config.iss);
+  // Get Identity Authority config
+  const authorityConfig = await getConfiguration(config.iss);
 
+  // Build Querystring
   const params = qs.stringify({
     scope: 'openid',
     response_type: 'code',
@@ -18,7 +20,10 @@ export const getAuthenticationUrl = async (config: AuthenticationUrlConfig): Pro
     prompt: config.prompt
   });
 
-  return `${providerConfig.authorization_endpoint}?${params}`;
+  // Combine URL
+  const url = `${authorityConfig.authorization_endpoint}?${params}`;
+
+  return url;
 };
 
 export const getTokens = async (
@@ -28,20 +33,26 @@ export const getTokens = async (
   code: string,
   redirectUri: string
 ): Promise<TokenResponse> => {
+  // Extract Endpoint from Identity Authority config
   const providerConfig = await getConfiguration(iss);
+  const endpoint = providerConfig.token_endpoint;
 
+  // Build body for HTTP request
   const body = qs.stringify({
     grant_type: 'authorization_code',
     code: code,
     redirect_uri: redirectUri
   });
+
   try {
-    const response = await axios.post(providerConfig.token_endpoint, body, {
+    // Fetch Tokens from Identity Authority
+    const response = await axios.post(endpoint, body, {
       auth: {
         username: clientId,
         password: clientSecret
       }
     });
+
     return response.data;
   } catch (error) {
     throw new Error('Failed getting tokens');

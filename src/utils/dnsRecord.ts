@@ -3,8 +3,6 @@ import { promisify } from 'util';
 import punycode from 'punycode';
 import { ParsedDnsRecord } from '../types';
 
-const promisifiedResolveTxt = promisify(dns.resolveTxt);
-
 export const validateDnsRecord = (record: string): boolean => {
   if (typeof record !== 'string') {
     return false;
@@ -52,6 +50,8 @@ export const filterAtSign = (input: string): string => {
     return input;
   }
 };
+
+const promisifiedResolveTxt = promisify(dns.resolveTxt);
 
 export const findDnsRecord = async (identifier: string): Promise<ParsedDnsRecord> => {
   const domain = punycode.toASCII(filterAtSign(identifier));

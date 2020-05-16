@@ -74,7 +74,7 @@ export interface ApplicationRegistrationData {
 export interface ApplicationResponse {
   grant_types: string[];
   subject_type: string;
-  application_type: string;
+  application_type: 'native' | 'web';
   logo_uri: string;
   registration_client_uri: string;
   redirect_uris: string[];

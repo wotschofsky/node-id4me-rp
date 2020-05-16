@@ -5,10 +5,13 @@ import { getConfiguration } from './registration';
 import { ClaimsOverview } from '../types';
 
 export const getClaims = async (iss: string, token: string): Promise<ClaimsOverview> => {
+  // Extract endpoint from Identity Authority configuration
   const config = await getConfiguration(iss);
+  const endpoint = config.userinfo_endpoint;
 
   try {
-    const response = await axios.get(config.userinfo_endpoint, {
+    // Send HTTP request to userinfo endpoint specified in Identity Agent configuration
+    const response = await axios.get(endpoint, {
       headers: {
         Accept: 'application/jwt',
         Authorization: `Bearer ${token}`,
@@ -23,16 +26,22 @@ export const getClaims = async (iss: string, token: string): Promise<ClaimsOverv
 };
 
 export const getDistributedClaim = async (claims: ClaimsOverview, name: string): Promise<string | number | null> => {
+  // TODO Find a solution without axios-retry
   axiosRetry(axios, {
     retries: 5
   });
 
   try {
+    // Extract name/id of claim based on claim type
     const claimName = claims._claim_names[name];
+
+    // Cancel if claim wasn't found
     if (!claimName) {
       return null;
     }
 
+    // TODO Implement caching
+    // Fetch JWT encoded claim
     const response = await axios.get(claims._claim_sources[claimName].endpoint, {
       headers: {
         Accept: 'application/jwt',
@@ -40,13 +49,15 @@ export const getDistributedClaim = async (claims: ClaimsOverview, name: string):
       }
     });
 
-    const content = jwt.decode(response.data) as Record<string, string | number>;
+    // Decode response
+    const content = jwt.decode(response.data) as { [key: string]: string | number };
 
+    // Return requested claim value
     return content[name];
   } catch (err) {
     console.error(err.config);
     return null;
   }
 
-  // TODO add support for recursion
+  // TODO Add support for recursion
 };

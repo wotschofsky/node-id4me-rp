@@ -52,8 +52,8 @@ export const getConfiguration = async (iss: string, forceRefetch = false): Promi
 export const registerApplication = async (
   iss: string,
   config: ApplicationRegistrationData,
-  adapter = defaultStorageAdapter,
-  forceReset = false
+  forceReset = false,
+  adapter = defaultStorageAdapter
 ): Promise<ApplicationResponse> => {
   // Try to get config from storage if forceReset is false
   if (!forceReset) {

@@ -86,6 +86,7 @@ app.post('/auth', async (req, res) => {
         client_name: 'ID4me Node.js Demo',
         redirect_uris: [`${process.env.DOMAIN}/callback`]
       },
+      false,
       appRegistrationAdapter
     );
 
@@ -129,6 +130,7 @@ app.get('/callback', async (req, res) => {
         client_name: 'ID4me Node.js Demo',
         redirect_uris: [`${process.env.DOMAIN}/callback`]
       },
+      false,
       appRegistrationAdapter
     );
     const tokens = await id4me.getTokens(

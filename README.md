@@ -57,7 +57,6 @@ ApplicationStorageAdapter: Used to replace the default method of storing the cre
 ClaimsClient: Used to cut down on duplicate code when requesting multiple claims
 ```javascript
   const claimsClient = new id4me.ClaimsClient(identityAuthority, access_token);
-  await claimsClient.loadClaims();
   const email = await claimsClient.getClaim('email');
 ```
 

@@ -142,7 +142,6 @@ app.get('/callback', async (req, res) => {
     );
 
     const claimsClient = new id4me.ClaimsClient(req.session!.iss, tokens.access_token);
-    await claimsClient.loadClaims();
     req.session!.userData = {
       email: await claimsClient.getClaim('email'),
       givenName: await claimsClient.getClaim('given_name'),

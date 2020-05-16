@@ -11,20 +11,19 @@ export class ClaimsClient {
     this.token = token;
   }
 
-  public async loadClaims(): Promise<void> {
-    const claims = await getClaims(this.iss, this.token);
-    this.claims = claims;
-  }
-
   public async getClaim(name: string): Promise<string | number | null> {
+    // Load claims if not done yet
     if (!this.claims) {
-      throw new Error(
-        'Claims need be loaded first using ClaimsClient.loadClaims() before calling ClaimsClient.getClaim()'
-      );
+      const claims = await getClaims(this.iss, this.token);
+      this.claims = claims;
     }
+
+    // Test if claim is available as non-distributed claim
     if (name in this.claims) {
       return this.claims[name];
     }
+
+    // Fall back to logic for distributed claims
     return getDistributedClaim(this.claims, name);
   }
 }

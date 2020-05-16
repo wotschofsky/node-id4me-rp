@@ -13,8 +13,8 @@ const removeTrailingSlash = (value: string): string => {
 export const getConfigurationUrl = (iss: string): string => {
   if (!iss) return iss;
 
-  const separator = iss.endsWith('/') ? '' : '/';
-  const result = `${iss}${separator}.well-known/openid-configuration`;
+  const strippedUrl = removeTrailingSlash(iss);
+  const result = `${strippedUrl}/.well-known/openid-configuration`;
   return result;
 };
 

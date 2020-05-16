@@ -65,6 +65,7 @@
    },
    "exclude": [
       "__mocks__/",
+      "**/*.spec.ts",
       "demo/",
       "lib/",
       "node_modules/",

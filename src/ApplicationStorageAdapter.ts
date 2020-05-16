@@ -1,3 +1,4 @@
+import NodeCache from 'node-cache';
 import {
   ApplicationSaveFunction,
   ApplicationGetFunction,
@@ -55,3 +56,21 @@ export class ApplicationStorageAdapter {
     return await this._deleteMethod(identifer);
   }
 }
+
+// Create NodeCache instance
+const cache = new NodeCache();
+
+// Create ApplicationStorageAdapter instance as fallback
+export const defaultStorageAdapter = new ApplicationStorageAdapter(
+  async (identifier, data) => {
+    cache.set(`application.${identifier}`, data);
+  },
+  async identifier => {
+    return cache.get(`application.${identifier}`) as ApplicationResponse;
+  },
+  async identifier => {
+    const key = `application.${identifier}`;
+    cache.del(key);
+    return !cache.has(key);
+  }
+);

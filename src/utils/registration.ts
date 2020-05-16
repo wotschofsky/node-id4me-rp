@@ -1,6 +1,6 @@
 import axios from './axios';
 import cache from '../cache';
-import { ApplicationStorageAdapter } from '../ApplicationStorageAdapter';
+import { defaultStorageAdapter } from '../ApplicationStorageAdapter';
 import { AuthorityConfiguration, ApplicationRegistrationData, ApplicationResponse } from '../types';
 
 const removeTrailingSlash = (value: string): string => {
@@ -42,24 +42,10 @@ export const getConfiguration = async (iss: string, forceRefetch = false): Promi
   }
 };
 
-const defaultAdapter = new ApplicationStorageAdapter(
-  async (identifier, data) => {
-    cache.set(`application.${identifier}`, data);
-  },
-  async identifier => {
-    return cache.get(`application.${identifier}`) as ApplicationResponse;
-  },
-  async identifier => {
-    const key = `application.${identifier}`;
-    cache.del(key);
-    return !cache.has(key);
-  }
-);
-
 export const registerApplication = async (
   iss: string,
   config: ApplicationRegistrationData,
-  adapter = defaultAdapter,
+  adapter = defaultStorageAdapter,
   forceReset = false
 ): Promise<ApplicationResponse> => {
   if (!forceReset) {

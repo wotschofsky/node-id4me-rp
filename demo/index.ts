@@ -8,7 +8,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import lowdb from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync';
-import * as id4me from '../src/index';
+import * as id4me from 'id4me-rp';
 
 // Load .env file
 dotenv.config();
@@ -133,11 +133,12 @@ app.get('/callback', async (req, res) => {
       false,
       appRegistrationAdapter
     );
+
     const tokens = await id4me.getTokens(
       req.session!.iss,
       app.client_id,
       app.client_secret,
-      req.query.code,
+      req.query.code as string,
       `${process.env.DOMAIN}/callback`
     );
 

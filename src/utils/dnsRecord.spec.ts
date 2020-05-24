@@ -49,12 +49,12 @@ it('should filter email addresses and return the domain', () => {
 
 it('should try to find a valid dns record', () => {
   findDnsRecord('subsub.sub.example.com')
-    .then(result => {
+    .then((result) => {
       expect(result).toBe({
         v: 'OID1',
         iss: 'https://id.test.denic.de',
         cp: 'identityagent.de'
       });
     })
-    .catch(error => error);
+    .catch((error) => error);
 });

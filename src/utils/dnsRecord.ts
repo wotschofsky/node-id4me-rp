@@ -11,20 +11,20 @@ export const validateDnsRecord = (record: string): boolean => {
   const records = record.split(';');
 
   const includesVersion = records.includes('v=OID1');
-  const includesAuthority = records.findIndex(record => record.startsWith('iss=')) !== -1;
+  const includesAuthority = records.findIndex((record) => record.startsWith('iss=')) !== -1;
 
   if (!(includesVersion && includesAuthority)) {
     return false;
   }
 
-  const authority = records.find(record => record.startsWith('iss=')) as string;
+  const authority = records.find((record) => record.startsWith('iss=')) as string;
   const authorityValid = typeof authority === 'string' && /(([a-zA-Z0-9]+)[.])+([a-zA-Z])+/.test(authority);
 
   return authorityValid;
 };
 
 export const parseDnsRecord = (record: string): ParsedDnsRecord => {
-  const records = record.split(';').map(record => record.split('='));
+  const records = record.split(';').map((record) => record.split('='));
 
   const values: { [key: string]: string } = {};
   for (const record of records) {

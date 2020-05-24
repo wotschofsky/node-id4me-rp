@@ -30,10 +30,10 @@ it('should return the stored value', async () => {
     async (identifier, data) => {
       storage[identifier] = data;
     },
-    async identifier => {
+    async (identifier) => {
       return storage[identifier];
     },
-    async identifier => {
+    async (identifier) => {
       delete storage[identifier];
       return !storage[identifier];
     }

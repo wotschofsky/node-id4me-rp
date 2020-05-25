@@ -146,5 +146,5 @@ export interface ClaimsOverview {
 }
 
 export type ApplicationSaveFunction = (identifier: string, data: ApplicationResponse) => Promise<void>;
-export type ApplicationGetFunction = (identifer: string) => Promise<ApplicationResponse>;
+export type ApplicationGetFunction = (identifer: string) => Promise<ApplicationResponse | null>;
 export type ApplicationDeleteFunction = (identifier: string) => Promise<boolean>;

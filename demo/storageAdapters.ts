@@ -1,7 +1,7 @@
 import { ApplicationResponse } from 'id4me-rp/lib/types';
 import { ApplicationStorageAdapter } from 'id4me-rp';
-import FileSync from 'lowdb/adapters/FileSync';
-import lowdb, { LowdbSync } from 'lowdb';
+import FileAsync from 'lowdb/adapters/FileAsync';
+import lowdb, { LowdbAsync } from 'lowdb';
 
 const APPLICATIONS_COLLECTION = 'id4me-applications';
 
@@ -11,12 +11,12 @@ interface LowdbContent {
   };
 }
 
-let lowdbInstance: LowdbSync<LowdbContent> | null = null;
-const getLowdbInstance = (): LowdbSync<LowdbContent> => {
+let lowdbInstance: LowdbAsync<LowdbContent> | null = null;
+const getLowdbInstance = async (): Promise<LowdbAsync<LowdbContent>> => {
   if (!lowdbInstance) {
     // Initialize
-    const adapter = new FileSync('database.json');
-    const db = lowdb(adapter);
+    const adapter = new FileAsync('database.json');
+    const db = await lowdb(adapter);
 
     // Load defaults
     db.defaults({
@@ -33,15 +33,15 @@ const getLowdbInstance = (): LowdbSync<LowdbContent> => {
 
 export const lowdbStorageAdapter = new ApplicationStorageAdapter(
   async (identifier, data) => {
-    const db = getLowdbInstance();
+    const db = await getLowdbInstance();
     db.set(`${APPLICATIONS_COLLECTION}.${identifier}`, data).write();
   },
   async (identifier) => {
-    const db = getLowdbInstance();
+    const db = await getLowdbInstance();
     return db.get(`${APPLICATIONS_COLLECTION}.${identifier}`).value();
   },
   async (identifier) => {
-    const db = getLowdbInstance();
+    const db = await getLowdbInstance();
     db.unset(`${APPLICATIONS_COLLECTION}.${identifier}`).write();
     return true;
   }

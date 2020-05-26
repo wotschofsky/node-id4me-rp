@@ -70,5 +70,4 @@ While the library and the example app are written in TypeScript you can also use
 
 * Simplify general usage
 * Support for encryption (Looking for help)
-* Fix HTTPS requests failing due to bad certificates
 * Create more automated tests

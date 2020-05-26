@@ -27,7 +27,9 @@ or\
 * `async` getConfiguration(iss: string, forceRefetch = false): [AuthorityConfiguration](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L16)
 * `async` registerApplication(iss: string, config: [ApplicationRegistrationData](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L55), forceReset = false, adapter: [ApplicationStorageAdapter](/src/ApplicationStorageAdapter.ts) = memoryStorageAdapter): [ApplicationResponse](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L75)
 
-ApplicationStorageAdapter: Used to replace the default method of storing the credentials for applications registered at different Identity Authorities. All provided functions are expected to return a promise.
+❗ Even though there's a default for the adapter argument you should still pass a custom instance of [ApplicationStorageAdapter](/src/ApplicationStorageAdapter.ts) to prevent being blocked by an Identity Authority and to ensure consistency across instances of your application.
+
+ApplicationStorageAdapter: Used to replace the default method of storing the credentials for applications registered at different Identity Authorities. In each function you're expected to write the code needed to connect your application to the database of your choice. All provided functions are expected to return a promise.
 ```javascript
   const adapter = new id4me.ApplicationStorageAdapter(
     async (identifier, data) => {

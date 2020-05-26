@@ -1,6 +1,6 @@
 import axios from './axios';
 import cache from '../cache';
-import { defaultStorageAdapter } from '../ApplicationStorageAdapter';
+import { memoryStorageAdapter } from '../ApplicationStorageAdapter';
 import { AuthorityConfiguration, ApplicationRegistrationData, ApplicationResponse } from '../types';
 
 const removeTrailingSlash = (value: string): string => {
@@ -53,7 +53,7 @@ export const registerApplication = async (
   iss: string,
   config: ApplicationRegistrationData,
   forceReset = false,
-  adapter = defaultStorageAdapter
+  adapter = memoryStorageAdapter
 ): Promise<ApplicationResponse> => {
   // Try to get config from storage if forceReset is false
   if (!forceReset) {

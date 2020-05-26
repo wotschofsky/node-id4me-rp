@@ -1,4 +1,4 @@
-import { ApplicationStorageAdapter, defaultStorageAdapter } from './ApplicationStorageAdapter';
+import { ApplicationStorageAdapter, memoryStorageAdapter } from './ApplicationStorageAdapter';
 import { ApplicationResponse } from './types';
 
 const dummyResponse: ApplicationResponse = {
@@ -43,7 +43,7 @@ it('should return the stored value', async () => {
   const returnedValueCustom = await customAdapter.get('example.com');
   expect(returnedValueCustom).toMatchObject(dummyResponse);
 
-  defaultStorageAdapter.save('example.com', dummyResponse);
-  const returnedValueDefault = await defaultStorageAdapter.get('example.com');
+  memoryStorageAdapter.save('example.com', dummyResponse);
+  const returnedValueDefault = await memoryStorageAdapter.get('example.com');
   expect(returnedValueDefault).toMatchObject(dummyResponse);
 });

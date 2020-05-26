@@ -25,7 +25,7 @@ or\
 
 * getConfigurationUrl(iss: string): string
 * `async` getConfiguration(iss: string, forceRefetch = false): [AuthorityConfiguration](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L16)
-* `async` registerApplication(iss: string, config: [ApplicationRegistrationData](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L55), forceReset = false, adapter: [ApplicationStorageAdapter](/src/ApplicationStorageAdapter.ts) = defaultStorageAdapter): [ApplicationResponse](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L75)
+* `async` registerApplication(iss: string, config: [ApplicationRegistrationData](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L55), forceReset = false, adapter: [ApplicationStorageAdapter](/src/ApplicationStorageAdapter.ts) = memoryStorageAdapter): [ApplicationResponse](https://github.com/feliskio/node-id4me-rp/blob/355c4caacf6f96372e674d7c7d0456b6ac577015/src/types.ts#L75)
 
 ApplicationStorageAdapter: Used to replace the default method of storing the credentials for applications registered at different Identity Authorities. All provided functions are expected to return a promise.
 ```javascript

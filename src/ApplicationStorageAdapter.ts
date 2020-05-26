@@ -67,7 +67,7 @@ export class ApplicationStorageAdapter {
 const cache = new NodeCache();
 
 // Create ApplicationStorageAdapter instance as fallback
-export const defaultStorageAdapter = new ApplicationStorageAdapter(
+export const memoryStorageAdapter = new ApplicationStorageAdapter(
   async (identifier, data) => {
     cache.set(`application.${identifier}`, data);
   },

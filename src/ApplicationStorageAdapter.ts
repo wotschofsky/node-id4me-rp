@@ -41,8 +41,8 @@ export class ApplicationStorageAdapter {
     await this.saveFunction(identifier, data);
   }
 
-  public async get(identifer: string): Promise<ApplicationResponse | null> {
-    const data = await this.getFunction(identifer);
+  public async get(identifier: string): Promise<ApplicationResponse | null> {
+    const data = await this.getFunction(identifier);
 
     // Return null if data is falsy
     if (!data) {
@@ -51,15 +51,15 @@ export class ApplicationStorageAdapter {
 
     // Delete credentials if expiry date is available and in the past
     if (!!data.client_secret_expires_at && data.client_secret_expires_at < Date.now()) {
-      await this.delete(identifer);
+      await this.delete(identifier);
       return null;
     }
 
     return data;
   }
 
-  public delete(identifer: string): Promise<boolean> {
-    return this.deleteFunction(identifer);
+  public delete(identifier: string): Promise<boolean> {
+    return this.deleteFunction(identifier);
   }
 }
 

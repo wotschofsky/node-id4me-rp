@@ -1,18 +1,19 @@
-import fs from 'fs';
-import path from 'path';
-import https from 'https';
-import express from 'express';
-import handlebars from 'express-handlebars';
-import session from 'express-session';
+import * as id4me from 'id4me-rp';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import * as id4me from 'id4me-rp';
+import express from 'express';
+import fs from 'fs';
+import handlebars from 'express-handlebars';
+import https from 'https';
+import path from 'path';
+import session from 'express-session';
 
 import * as storageAdapters from './storageAdapters';
 
 // Load .env file
 dotenv.config();
 
+// Setup Express
 const app = express();
 const port = process.env.PORT || 3030;
 

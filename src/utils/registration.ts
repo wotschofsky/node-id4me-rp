@@ -1,4 +1,4 @@
-import axios from './axios';
+import axios from 'axios';
 import cache from '../cache';
 import { memoryStorageAdapter } from '../ApplicationStorageAdapter';
 import { AuthorityConfiguration, ApplicationRegistrationData, ApplicationResponse } from '../types';

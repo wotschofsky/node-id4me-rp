@@ -13,6 +13,7 @@
     "@types/express-handlebars": "^3.1.0",
     "@types/express-session": "^1.15.16",
     "@types/lowdb": "^1.0.9",
+    "@types/mongodb": "^3.5.18",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -20,6 +21,7 @@
     "express-session": "^1.17.0",
     "id4me-rp": "../",
     "lowdb": "^1.0.0",
+    "mongodb": "^3.5.7",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   }

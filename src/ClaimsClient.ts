@@ -3,13 +3,8 @@ import { ClaimsOverview } from './types';
 
 export class ClaimsClient {
   private claims: ClaimsOverview | null = null;
-  private iss: string;
-  private token: string;
 
-  constructor(iss: string, token: string) {
-    this.iss = iss;
-    this.token = token;
-  }
+  constructor(private iss: string, private token: string) {}
 
   public async getClaim(name: string): Promise<string | number | null> {
     // Load claims if not done yet

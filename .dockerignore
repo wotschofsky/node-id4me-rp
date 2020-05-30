@@ -1,0 +1,11 @@
+__mocks__/
+.git*
+.git/
+.github/
+**/*.env
+**/database.json
+**/node_modules/
+**/README.md
+lib/
+tests/
+gcp-service-account.json

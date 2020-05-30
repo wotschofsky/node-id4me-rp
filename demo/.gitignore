@@ -109,3 +109,5 @@ database.json
 # Certificate files
 certs/server.cert
 certs/server.key
+
+gcp-service-account.json

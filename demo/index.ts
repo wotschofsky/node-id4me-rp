@@ -6,7 +6,7 @@ import fs from 'fs';
 import handlebars from 'express-handlebars';
 import https from 'https';
 import path from 'path';
-import session from 'express-session';
+import session from 'cookie-session';
 
 import * as storageAdapters from './storageAdapters';
 
@@ -31,9 +31,7 @@ switch (process.env.STORAGE_ADAPTER) {
 // Setup middleware
 app.use(
   session({
-    secret: '735W9cu98P', // This should be put into .env or similar
-    resave: false,
-    saveUninitialized: true
+    secret: process.env.SESSION_SECRET
   })
 );
 app.use(bodyParser.urlencoded());

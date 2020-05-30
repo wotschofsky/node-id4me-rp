@@ -14,7 +14,7 @@
     "@types/express-handlebars": "^3.1.0",
     "@types/express-session": "^1.15.16",
     "@types/lowdb": "^1.0.9",
-    "@types/mongodb": "^3.5.18",
+    "@types/mongodb": "^3.5.20",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

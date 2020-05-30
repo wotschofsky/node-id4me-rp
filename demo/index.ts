@@ -28,7 +28,7 @@ app.use(
     saveUninitialized: true
   })
 );
-app.use(bodyParser());
+app.use(bodyParser.urlencoded());
 app.engine('handlebars', handlebars());
 app.set('view engine', 'handlebars');
 

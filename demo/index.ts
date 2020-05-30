@@ -18,7 +18,15 @@ const app = express();
 const port = process.env.PORT || 3030;
 
 // Load Storage Adapter
-const appRegistrationAdapter = storageAdapters.lowdbStorageAdapter;
+let appRegistrationAdapter = id4me.memoryStorageAdapter;
+switch (process.env.STORAGE_ADAPTER) {
+  case 'lowdb':
+    appRegistrationAdapter = storageAdapters.lowdbStorageAdapter;
+  case 'mongo':
+    appRegistrationAdapter = storageAdapters.mongoStorageAdapter;
+  case 'firestore':
+    appRegistrationAdapter = storageAdapters.firestoreStorageAdapter;
+}
 
 // Setup middleware
 app.use(

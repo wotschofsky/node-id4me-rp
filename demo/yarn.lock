@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@google-cloud/firestore@^3.8.3":
-  version "3.8.3"
-  resolved "https://registry.yarnpkg.com/@google-cloud/firestore/-/firestore-3.8.3.tgz#e821cbb3f502fa0f98cdbaaecc47eaa43799abff"
-  integrity sha512-8NR7vGywd4Pp37dvIEKp87T37XGzK03wU4/lBwMapYfgnPMRYHlwZaxyXLnnvZP1hxl8omPQ9z5hcQjZ+qfubw==
+"@google-cloud/firestore@^3.8.4":
+  version "3.8.4"
+  resolved "https://registry.yarnpkg.com/@google-cloud/firestore/-/firestore-3.8.4.tgz#486e4ac19e538a233ff9e862ce576e7c58ce0e7e"
+  integrity sha512-LCZeqB6goNKzD5G/wcoqWaQ2uf3FV/dtU5OSypqOWl+vHMTEVh1ap2H21JXaEydxq53lCayGfqjhDQzs0J3Qew==
   dependencies:
     deep-equal "^2.0.0"
     functional-red-black-tree "^1.0.1"

@@ -1,5 +1,6 @@
 import * as id4me from 'id4me-rp';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import express from 'express';
 import fs from 'fs';
@@ -35,6 +36,7 @@ app.use(
   })
 );
 app.use(bodyParser.urlencoded());
+app.use(cookieParser());
 app.engine('handlebars', handlebars());
 app.set('view engine', 'handlebars');
 
@@ -47,6 +49,7 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req, res) => {
   res.render('login', {
+    identifier: req.cookies.identifier || '',
     loggedIn: req.session!.loggedIn,
     error: req.session!.error
   });
@@ -103,6 +106,13 @@ app.post('/auth', async (req, res) => {
     });
 
     req.session!.iss = record.iss;
+
+    // Save identifier as cookie
+    res.cookie('identifier', req.body.identifier, {
+      httpOnly: true,
+      maxAge: 30 * 24 * 60 * 60 * 1000 // 30 Days
+    });
+
     res.redirect(authUrl);
   } catch (err) {
     req.session!.error = `Failed authenticating you: ${err}`;

@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Build Docker image
-        run: docker build . --tag eu.gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_DEMO_APP_NAME }}
+        run: docker build . --tag eu.gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_DEMO_APP_NAME }}
       - name: Authenticate into Google Cloud Platform
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:

@@ -1,15 +1,33 @@
 {{#if givenName }}
   <h1>Welcome, {{ givenName }}</h1>
+{{else}}
+  <h1>Welcome</h1>
 {{/if}}
 <table class="table">
   <tbody>
     <tr>
       <th>Email</th>
-      <td>{{ email }}</td>
+      {{#if email}}
+        <td>
+          {{ email }}
+        </td>
+      {{else}}
+        <td>
+          <i>Not provided</i>
+        </td>
+      {{/if}}
     </tr>
     <tr>
       <th>Full Name</th>
-      <td>{{ name }}</td>
+      {{#if name}}
+        <td>
+          {{ name }}
+        </td>
+      {{else}}
+        <td>
+          <i>Not provided</i>
+        </td>
+      {{/if}}
     </tr>
   </tbody>
 </table>

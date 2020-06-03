@@ -1,0 +1,35 @@
+name: Deploy Demo App
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - demo/
+      - Dockerfile
+      - .dockerignore
+
+jobs:
+  deploy:
+    name: Deploy Demo App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+
+      - name: Build Docker image
+        run: docker build . --tag eu.gcr.io/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_DEMO_APP_NAME }}
+      - name: Authenticate into Google Cloud Platform
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_email: ${{ secrets.GCLOUD_EMAIL }}
+          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+
+      - name: Configure Docker to use Google Cloud Platform
+        run: gcloud auth configure-docker --quiet
+
+      - name: Push image to Google Cloud Container Registry
+        run: docker push eu.gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_DEMO_APP_NAME }}
+
+      - name: Deploy to Cloud Run
+        run: gcloud run deploy ${{ secrets.GCLOUD_DEMO_APP_NAME }} --quiet --image eu.gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_DEMO_APP_NAME }} --project ${{ secrets.GCLOUD_PROJECT }} --platform managed --region europe-west4

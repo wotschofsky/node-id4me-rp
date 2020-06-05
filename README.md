@@ -27,6 +27,12 @@ or\
 * `async` getConfiguration(iss: string, forceRefetch = false): [AuthorityConfiguration](/src/types.ts#L15)
 * `async` registerApplication(iss: string, config: [ApplicationRegistrationData](/src/types.ts#L54), forceReset = false, adapter: [ApplicationStorageAdapter](/src/ApplicationStorageAdapter.ts) = memoryStorageAdapter): [ApplicationResponse](/src/types.ts#L74)
 
+RegistrationsClient: Stores config and adapter to reduce code duplication
+```javascript
+  const registrationsClient = new id4me.RegistrationsClient(config: ApplicationRegistrationData, adapter: ApplicationStorageAdapter = memoryStorageAdapter);
+  const app = await registrationsClient.getApplication(iss: string, forceReset = false);
+```
+
 ❗ Even though there's a default for the adapter argument you should still pass a custom instance of [ApplicationStorageAdapter](/src/ApplicationStorageAdapter.ts) to prevent being blocked by an Identity Authority and to ensure consistency across instances of your application.
 
 ApplicationStorageAdapter: Used to replace the default method of storing the credentials for applications registered at different Identity Authorities. In each function you're expected to write the code needed to connect your application to the database of your choice. All provided functions are expected to return a promise.

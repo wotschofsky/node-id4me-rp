@@ -29,6 +29,15 @@ switch (process.env.STORAGE_ADAPTER) {
     appRegistrationAdapter = storageAdapters.firestoreStorageAdapter;
 }
 
+// Initialize RegistrationsClient
+const registrationsClient = new id4me.RegistrationsClient(
+  {
+    client_name: 'ID4me Node.js Demo',
+    redirect_uris: [`${process.env.DOMAIN}/callback`]
+  },
+  appRegistrationAdapter
+);
+
 // Setup middleware
 app.use(
   session({
@@ -71,15 +80,7 @@ app.post('/auth', async (req, res) => {
   try {
     const record = await id4me.findDnsRecord(req.body.identifier);
 
-    const app = await id4me.registerApplication(
-      record.iss,
-      {
-        client_name: 'ID4me Node.js Demo',
-        redirect_uris: [`${process.env.DOMAIN}/callback`]
-      },
-      false,
-      appRegistrationAdapter
-    );
+    const app = await registrationsClient.getApplication(record.iss);
 
     const authUrl = await id4me.getAuthenticationUrl({
       claims: {
@@ -122,15 +123,7 @@ app.post('/auth', async (req, res) => {
 
 app.get('/callback', async (req, res) => {
   try {
-    const app = await id4me.registerApplication(
-      req.session!.iss,
-      {
-        client_name: 'ID4me Node.js Demo',
-        redirect_uris: [`${process.env.DOMAIN}/callback`]
-      },
-      false,
-      appRegistrationAdapter
-    );
+    const app = await registrationsClient.getApplication(req.session!.iss);
 
     const tokens = await id4me.getTokens(
       req.session!.iss,

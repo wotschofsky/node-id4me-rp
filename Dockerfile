@@ -1,21 +1,24 @@
-FROM node:12-alpine
+FROM node:12-alpine as builder
 
-COPY package.json ./
-COPY yarn.lock ./
+WORKDIR /app
+
+COPY package.json .
+COPY yarn.lock .
 
 RUN yarn install --frozen-lockfile --ignore-scripts
-RUN yarn global add typescript
-
 
 COPY . .
 
-RUN tsc --build tsconfig.json
+RUN yarn build
 
 
-WORKDIR /demo/
+FROM node:12-alpine
 
-RUN npm install
+COPY --from=builder /app /app
 
+WORKDIR /app/demo
+
+RUN yarn install --frozen-lockfile --ignore-scripts
 
 ENV PORT 3030
 EXPOSE 3030

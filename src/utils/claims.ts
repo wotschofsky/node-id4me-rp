@@ -55,7 +55,11 @@ export const getDistributedClaim = async (claims: ClaimsOverview, name: string):
     // Return requested claim value
     return content[name];
   } catch (err) {
-    console.error(err.config);
+    if (axios.isAxiosError(err)) {
+      console.error(err.config);
+    } else {
+      console.error(err);
+    }
     return null;
   }
 

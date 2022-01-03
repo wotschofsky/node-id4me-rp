@@ -85,7 +85,7 @@ export const findDnsRecord = async (identifier: string): Promise<ParsedDnsRecord
         return parseDnsRecord(value);
       }
     }
-  } catch (error) {
+  } catch (error: any) {
     if (error.code !== 'ENOTFOUND' && error.code !== 'ENODATA') {
       throw error;
     }

@@ -23,10 +23,13 @@ let appRegistrationAdapter = id4me.memoryStorageAdapter;
 switch (process.env.STORAGE_ADAPTER) {
   case 'lowdb':
     appRegistrationAdapter = storageAdapters.lowdbStorageAdapter;
+    break;
   case 'mongo':
     appRegistrationAdapter = storageAdapters.mongoStorageAdapter;
+    break;
   case 'firestore':
     appRegistrationAdapter = storageAdapters.firestoreStorageAdapter;
+    break;
 }
 
 // Initialize RegistrationsClient

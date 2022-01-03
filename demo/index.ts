@@ -55,12 +55,14 @@ app.set('view engine', 'handlebars');
 // Setup front-end routes
 app.get('/', (req, res) => {
   res.render('home', {
+    headEmbed: process.env.HEAD_EMBED,
     loggedIn: req.session!.loggedIn
   });
 });
 
 app.get('/login', (req, res) => {
   res.render('login', {
+    headEmbed: process.env.HEAD_EMBED,
     identifier: req.cookies.identifier || '',
     loggedIn: req.session!.loggedIn,
     error: req.session!.error
@@ -73,6 +75,7 @@ app.get('/profile', (req, res) => {
     res.redirect('/login');
   } else {
     res.render('profile', {
+      headEmbed: process.env.HEAD_EMBED,
       loggedIn: true,
       ...req.session!.userData
     });
